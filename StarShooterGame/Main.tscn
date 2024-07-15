@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/background.png" type="Texture" id=1]
+[ext_resource path="res://Characters/Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Characters/Enemies/NormalEnemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Characters/Enemies/DiverEnemy.tscn" type="PackedScene" id=4]
+
+[node name="Main" type="Node2D"]
+
+[node name="BackDrop" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 540, 960 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 270, 770 )
+
+[node name="NormalEnemy" parent="." instance=ExtResource( 3 )]
+position = Vector2( 390, 41 )
+
+[node name="DiverEnemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 121, 47 )

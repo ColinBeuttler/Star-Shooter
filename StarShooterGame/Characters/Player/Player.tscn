@@ -4,6 +4,7 @@
 [ext_resource path="res://Assets/player.png" type="Texture" id=2]
 
 [node name="Player" type="Area2D"]
+position = Vector2( 270, 770 )
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -12,3 +13,8 @@ texture = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -42, 4, -29, 26, -13, 23, -9, 28, 9, 28, 12, 23, 28, 26, 42, 5, 7, -15, 3, -28, 0, -28, -3, -28, -8, -14 )
+
+[node name="Muzzle" type="Position2D" parent="."]
+position = Vector2( 0, -40 )
+
+[connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]

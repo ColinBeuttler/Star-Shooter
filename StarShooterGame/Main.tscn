@@ -1,11 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/background.png" type="Texture" id=1]
 [ext_resource path="res://Characters/Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Characters/Enemies/NormalEnemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Characters/Enemies/DiverEnemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Characters/Enemies/EnemySpawner.gd" type="Script" id=5]
+[ext_resource path="res://Main.gd" type="Script" id=6]
+[ext_resource path="res://Characters/Enemies/ShootingEnemy.tscn" type="PackedScene" id=7]
+[ext_resource path="res://UI/HUD.tscn" type="PackedScene" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 374.5, 65 )
 
 [node name="Main" type="Node2D"]
+script = ExtResource( 6 )
 
 [node name="BackDrop" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -14,10 +22,51 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 540, 960 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 270, 770 )
+hp = 5
 
-[node name="NormalEnemy" parent="." instance=ExtResource( 3 )]
-position = Vector2( 390, 41 )
+[node name="EnemySpawner" type="Node2D" parent="."]
+script = ExtResource( 5 )
+enemies = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ) ]
 
-[node name="DiverEnemy" parent="." instance=ExtResource( 4 )]
-position = Vector2( 121, 47 )
+[node name="SpawnPositions" type="Node2D" parent="EnemySpawner"]
+position = Vector2( 0, -100 )
+
+[node name="SpawnPosition_01" type="Position2D" parent="EnemySpawner/SpawnPositions"]
+position = Vector2( 70, 0 )
+
+[node name="SpawnPosition_02" type="Position2D" parent="EnemySpawner/SpawnPositions"]
+position = Vector2( 170, 0 )
+
+[node name="SpawnPosition_03" type="Position2D" parent="EnemySpawner/SpawnPositions"]
+position = Vector2( 270, 0 )
+
+[node name="SpawnPosition_04" type="Position2D" parent="EnemySpawner/SpawnPositions"]
+position = Vector2( 370, 0 )
+
+[node name="SpawnPosition_05" type="Position2D" parent="EnemySpawner/SpawnPositions"]
+position = Vector2( 470, 0 )
+
+[node name="SpawnTimer" type="Timer" parent="EnemySpawner"]
+wait_time = 2.0
+autostart = true
+
+[node name="DeadZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone"]
+position = Vector2( 270.5, -236 )
+shape = SubResource( 1 )
+
+[node name="DeadZone2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone2"]
+position = Vector2( 274, 1066 )
+shape = SubResource( 1 )
+
+[node name="HUD" parent="." instance=ExtResource( 8 )]
+
+[connection signal="player_took_damage" from="Player" to="." method="_on_Player_player_took_damage"]
+[connection signal="spawn_laser" from="Player" to="." method="spawn_laser"]
+[connection signal="spawn_enemy" from="EnemySpawner" to="." method="spawn_enemy"]
+[connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_SpawnTimer_timeout"]
+[connection signal="area_entered" from="DeadZone" to="." method="_on_DeadZone_area_entered"]
+[connection signal="area_entered" from="DeadZone2" to="." method="_on_DeadZone_area_entered"]

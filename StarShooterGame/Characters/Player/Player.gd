@@ -1,8 +1,18 @@
 extends Area2D
+class_name Player
+
+signal spawn_laser(Laser, location)
+signal player_took_damage(hp_left)
 
 export (int) var speed = 300
+export (int) var hp = 3 
+export (int) var damage = 1
 
 var input_vector = Vector2.ZERO
+
+var Laser = preload("res://projectiles/PlayerLaser.tscn")
+
+onready var muzzle = $Muzzle
 
 func _physics_process(delta):
 	
@@ -15,3 +25,20 @@ func _physics_process(delta):
 	global_position.x = clamp(global_position.x, 40, 500)
 	global_position.y = clamp(global_position.y, 30, 930)
 	
+	if Input.is_action_just_pressed("shoot"):
+		emit_signal("spawn_laser", Laser, muzzle.global_position)
+	
+	
+
+
+func _on_Player_area_entered(area):
+	if area.is_in_group("enemies"):
+		area.take_damage(damage)
+
+
+func take_damage(_damage):
+	hp -= _damage
+	emit_signal("player_took_damage", hp)
+	if hp <= 0:
+		queue_free()
+		

@@ -4,14 +4,16 @@
 [ext_resource path="res://Assets/enemy-red.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 31.0644
+radius = 33.0151
 
 [node name="DiverEnemy" instance=ExtResource( 1 )]
-speed = 600
+speed = 300
+score = 25
 
 [node name="Sprite" parent="." index="0"]
 scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( 0, -6 )
 shape = SubResource( 1 )

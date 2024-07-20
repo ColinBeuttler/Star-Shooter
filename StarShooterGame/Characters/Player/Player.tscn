@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Characters/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/player.png" type="Texture" id=2]
+[ext_resource path="res://Assets/sfx_laser1.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/hit.wav" type="AudioStream" id=4]
 
 [node name="Player" type="Area2D"]
 position = Vector2( 270, 770 )
@@ -16,5 +18,11 @@ polygon = PoolVector2Array( -42, 4, -29, 26, -13, 23, -9, 28, 9, 28, 12, 23, 28,
 
 [node name="Muzzle" type="Position2D" parent="."]
 position = Vector2( 0, -40 )
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="LaserSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
 
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]

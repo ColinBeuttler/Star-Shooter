@@ -1,6 +1,6 @@
 extends Area2D
 
-signal enemy_died(score)
+signal enemy_died(score, location)
 
 export (int) var speed = 150
 export (int) var hp = 1 
@@ -22,5 +22,5 @@ func take_damage(_damage):
 	hit_sound.play()
 	if hp <= 0:
 		queue_free()
-		emit_signal("enemy_died", score)
+		emit_signal("enemy_died", score, global_position)
 

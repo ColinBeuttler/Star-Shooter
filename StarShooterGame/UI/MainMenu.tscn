@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/kenvector_future.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Fonts/font_44.tres" type="DynamicFont" id=2]
@@ -10,6 +10,32 @@
 [sub_resource type="DynamicFont" id=2]
 size = 32
 font_data = ExtResource( 1 )
+
+[sub_resource type="Gradient" id=3]
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0, 0.00332226, 0.45515 )
+colors = PoolColorArray( 0.999216, 0.997647, 0.997647, 0.808627, 0.996078, 0.988235, 0.988235, 0.0431373, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = -300.0
+initial_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 4.0
+scale_random = 0.5
+color = Color( 0.984314, 0.976471, 0.976471, 0.976471 )
+color_ramp = SubResource( 6 )
+color_initial_ramp = SubResource( 4 )
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -52,6 +78,13 @@ margin_right = 248.0
 margin_bottom = 112.0
 custom_fonts/font = ExtResource( 3 )
 text = "Quit"
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 270, 492 )
+amount = 50
+lifetime = 5.0
+preprocess = 5.0
+process_material = SubResource( 7 )
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]

@@ -4,6 +4,8 @@ signal spawn_enemy(EnemyScene, location)
 
 export (Array, PackedScene) var enemies
 
+onready var spawn_timer = $SpawnTimer
+
 var spawn_positions = null
 
 func _ready():
@@ -18,3 +20,5 @@ func spawn_random_enemy():
 	var rand_index = randi()%spawn_positions.size()
 	emit_signal("spawn_enemy", rand_enemy, spawn_positions[rand_index].global_position)
 	
+func stop():
+	spawn_timer.stop()
